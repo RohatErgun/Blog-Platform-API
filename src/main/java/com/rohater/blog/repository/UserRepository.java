@@ -1,4 +1,4 @@
-package com.rohater.blog.domain.repository;
+package com.rohater.blog.repository;
 
 import com.rohater.blog.domain.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
