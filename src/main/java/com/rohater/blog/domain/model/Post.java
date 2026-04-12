@@ -8,6 +8,8 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
+import com.rohater.blog.domain.model.User;
+
 @Entity
 @Table(name = "posts")
 @NoArgsConstructor
@@ -38,6 +40,10 @@ public class Post {
 
     @Column(nullable = false)
     private LocalDateTime updatedAt;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "author_id", nullable = false)
+    private User author;
 
     @Override
     public boolean equals(Object object) {
