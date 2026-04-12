@@ -1,0 +1,10 @@
+package com.rohater.blog.domain.repository;
+
+import com.rohater.blog.domain.model.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.UUID;
+
+public interface UserRepository
+        extends JpaRepository<User, UUID> {
+}
