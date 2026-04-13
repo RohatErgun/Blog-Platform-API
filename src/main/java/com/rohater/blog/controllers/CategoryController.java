@@ -1,6 +1,7 @@
 package com.rohater.blog.controllers;
 
 import com.rohater.blog.domain.dtos.CreateCategoryRequest;
+import com.rohater.blog.domain.model.Category;
 import com.rohater.blog.mappers.CategoryMapper;
 import com.rohater.blog.services.CategoryService;
 import jakarta.validation.Valid;
@@ -32,6 +33,7 @@ public class CategoryController {
     @PostMapping
     public ResponseEntity<CreateCategoryRequest> createCategory(
             @Valid @RequestBody CreateCategoryRequest createCategoryRequest){
-        // Todo
+        Category categoryToCreateRequest = categoryMapper.toEntity(createCategoryRequest);
+        // Todo add service method to createCategoryRequest
     }
 }
