@@ -34,7 +34,7 @@ public class User {
     private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Post> userPosts = new ArrayList<>();
+    private List<Post> posts = new ArrayList<>();
 
     @Override
     public boolean equals(Object object) {
