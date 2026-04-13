@@ -1,13 +1,12 @@
 package com.rohater.blog.controllers;
 
-import com.rohater.blog.domain.model.Category;
+import com.rohater.blog.domain.dtos.CreateCategoryRequest;
 import com.rohater.blog.mappers.CategoryMapper;
 import com.rohater.blog.services.CategoryService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.rohater.blog.domain.dtos.CategoryDTO;
 
@@ -28,5 +27,11 @@ public class CategoryController {
                 .toList();
 
         return ResponseEntity.ok(categories);
+    }
+
+    @PostMapping
+    public ResponseEntity<CreateCategoryRequest> createCategory(
+            @Valid @RequestBody CreateCategoryRequest createCategoryRequest){
+        // Todo
     }
 }
