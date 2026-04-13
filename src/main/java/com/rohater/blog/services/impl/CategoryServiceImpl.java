@@ -23,7 +23,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     @Transactional
     public Category createCategory(Category category) {
-        if (categoryRepository.existByNameIgnoreCase(category.getName())){
+        if (categoryRepository.existsByNameIgnoreCase(category.getName())){
             throw new IllegalArgumentException
                     ("Category with " + category.getName() + " is already exists");
         }

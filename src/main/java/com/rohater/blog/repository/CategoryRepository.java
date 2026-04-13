@@ -15,5 +15,5 @@ public interface CategoryRepository
     @Query("SELECT c FROM Category c LEFT JOIN FETCH c.posts")
     List<Category> findAllByPostCount();
 
-    boolean existByNameIgnoreCase(String name);
+    boolean existsByNameIgnoreCase(String name);
 }
