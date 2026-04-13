@@ -3,9 +3,11 @@ package com.rohater.blog.controllers;
 import com.rohater.blog.domain.dtos.CreateCategoryRequest;
 import com.rohater.blog.domain.model.Category;
 import com.rohater.blog.mappers.CategoryMapper;
+import com.rohater.blog.repository.CategoryRepository;
 import com.rohater.blog.services.CategoryService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,9 +33,15 @@ public class CategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<CreateCategoryRequest> createCategory(
+    public ResponseEntity<CategoryDTO> createCategory(
             @Valid @RequestBody CreateCategoryRequest createCategoryRequest){
-        Category categoryToCreateRequest = categoryMapper.toEntity(createCategoryRequest);
-        // Todo add service method to createCategoryRequest
+
+        Category categoryToCreate = categoryMapper.toEntity(createCategoryRequest);
+        Category savedCategory = categoryService.createCategory(categoryToCreate);
+
+        return new ResponseEntity<>(
+          categoryMapper.toDTo(savedCategory),
+                HttpStatus.CREATED
+        );
     }
 }
