@@ -1,6 +1,7 @@
 package com.rohater.blog.controllers;
 
 import com.rohater.blog.domain.model.Category;
+import com.rohater.blog.services.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,8 +17,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CategoryController {
 
+    private final CategoryService categoryService;
+
     @GetMapping
     public ResponseEntity<List<CategoryDTO>> listCategories(){
-        // Todo
+        List<Category> categories = categoryService.listCategories();
+        return categories;
     }
 }
