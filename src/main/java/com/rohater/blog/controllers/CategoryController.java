@@ -47,7 +47,8 @@ public class CategoryController {
     }
 
     @DeleteMapping(path = "/{id}")
-    public void deleteCategory(@PathVariable UUID id){
-        // Todo
+    public ResponseEntity<Void> deleteCategory(@PathVariable UUID id){
+        categoryService.deleteCategory(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
