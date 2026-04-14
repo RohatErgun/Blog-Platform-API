@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import com.rohater.blog.domain.dtos.CategoryDTO;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/categories")
@@ -43,5 +44,10 @@ public class CategoryController {
           categoryMapper.toDTo(savedCategory),
                 HttpStatus.CREATED
         );
+    }
+
+    @DeleteMapping(path = "/{id}")
+    public void deleteCategory(@PathVariable UUID id){
+        // Todo
     }
 }
