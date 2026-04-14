@@ -17,9 +17,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
         httpSecurity.authorizeHttpRequests(auth -> auth
-                .requestMatchers(HttpMethod.GET, "api/v1/categories/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "api/v1/posts/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "api/v1/tags/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/v1/categories/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/v1/posts/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/v1/tags/**").permitAll()
                 .anyRequest().authenticated()
         )
                 .csrf(csrf -> csrf.disable())
