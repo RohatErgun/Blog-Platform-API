@@ -2,7 +2,7 @@ package com.rohater.blog.controllers;
 
 import com.rohater.blog.domain.dtos.AuthResponse;
 import com.rohater.blog.domain.dtos.LoginRequest;
-import com.rohater.blog.security.AuthenticationService;
+import com.rohater.blog.services.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;

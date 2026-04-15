@@ -1,6 +1,6 @@
 package com.rohater.blog.services.impl;
 
-import com.rohater.blog.security.AuthenticationService;
+import com.rohater.blog.services.AuthenticationService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -26,6 +26,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Value("${jwt.secret}")
     private String secretKey;
 
+    // Todo: Make it configurable
     private Long jwtExpiryMs = 86400000L; // 24 hours
 
     @Override

@@ -1,4 +1,4 @@
-package com.rohater.blog.security;
+package com.rohater.blog.services;
 
 import org.springframework.security.core.userdetails.UserDetails;
 
