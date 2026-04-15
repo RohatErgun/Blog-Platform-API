@@ -1,6 +1,7 @@
 package com.rohater.blog.services.impl;
 
 import com.rohater.blog.services.AuthenticationService;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -52,5 +53,22 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private Key getSingingKey(){
         byte[] keyBytes = secretKey.getBytes();
         return Keys.hmacShaKeyFor(keyBytes);
+    }
+
+    @Override
+    public UserDetails validateToken(String token) {
+        String username = extractUsername(token);
+        return userDetailsService.loadUserByUsername(username);
+    }
+
+    // Throws exception if signingKey doest match, only return username if its valid JWT
+    private String extractUsername(String token){
+        Claims claims = Jwts.parserBuilder()
+                .setSigningKey(getSingingKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+
+        return claims.getSubject();
     }
 }
