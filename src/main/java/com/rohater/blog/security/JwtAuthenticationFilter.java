@@ -34,7 +34,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             SecurityContextHolder.getContext().setAuthentication(auth);
             // setting userId to not check for email all the time
             if (userDetails instanceof BlogUserDetails){
-                request.setAttribute("userId", ((BlogUserDetails) userDetails.getId()));
+                request.setAttribute("userId", ((BlogUserDetails)userDetails).getId());
             }
         }
 
