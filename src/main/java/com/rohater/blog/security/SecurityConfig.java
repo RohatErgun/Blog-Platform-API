@@ -1,5 +1,6 @@
 package com.rohater.blog.security;
 
+import com.rohater.blog.repository.UserRepository;
 import com.rohater.blog.services.AuthenticationService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,6 +9,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -20,6 +22,11 @@ public class SecurityConfig {
     public JwtAuthenticationFilter jwtAuthenticationFilter
             (AuthenticationService authenticationService){
         return new JwtAuthenticationFilter(authenticationService);
+    }
+
+    @Bean
+    public UserDetailsService userDetailsService(UserRepository userRepository){
+        return new BlogUserDetailsService(userRepository);
     }
 
     @Bean
