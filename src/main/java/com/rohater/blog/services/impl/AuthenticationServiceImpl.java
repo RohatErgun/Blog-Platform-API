@@ -1,5 +1,8 @@
 package com.rohater.blog.services.impl;
 
+import com.rohater.blog.domain.model.User;
+import com.rohater.blog.repository.UserRepository;
+import com.rohater.blog.security.BlogUserDetails;
 import com.rohater.blog.services.AuthenticationService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -8,9 +11,11 @@ import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
@@ -23,6 +28,8 @@ import java.util.Map;
 public class AuthenticationServiceImpl implements AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final UserDetailsService userDetailsService;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Value("${jwt.secret}")
     private String secretKey;
@@ -36,6 +43,20 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 new UsernamePasswordAuthenticationToken(email, password)
         );
         return userDetailsService.loadUserByUsername(email);
+    }
+
+    @Override
+    public UserDetails register(String name, String email, String password) {
+        if (userRepository.existsUserByEmail(email)){
+            throw new BadCredentialsException("Email is already in user: " + email);
+        }
+        User user = User.builder()
+                .name(name)
+                .password(passwordEncoder.encode(password))
+                .email(email)
+                .build();
+        userRepository.save(user);
+        return new BlogUserDetails(user);
     }
 
     @Override
