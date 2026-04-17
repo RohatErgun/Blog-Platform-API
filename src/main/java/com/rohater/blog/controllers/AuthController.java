@@ -5,6 +5,7 @@ import com.rohater.blog.domain.dtos.LoginRequest;
 import com.rohater.blog.domain.dtos.RegisterRequest;
 import com.rohater.blog.services.AuthenticationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,6 +36,17 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest registerRequest){
-        // Todo
+        UserDetails userDetails = authenticationService.register(
+                registerRequest.getName(),
+                registerRequest.getEmail(),
+                registerRequest.getPassword()
+        );
+
+        String tokenValue = authenticationService.generateToken(userDetails);
+        AuthResponse authResponse = AuthResponse.builder()
+                .token(tokenValue)
+                .expiresIn(86400)
+                .build();
+        return ResponseEntity.status(HttpStatus.CREATED).body(authResponse);
     }
 }
