@@ -4,6 +4,7 @@ import com.rohater.blog.domain.PostStatus;
 import com.rohater.blog.domain.model.Category;
 import com.rohater.blog.domain.model.Post;
 import com.rohater.blog.domain.model.Tag;
+import com.rohater.blog.domain.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -17,4 +18,5 @@ public interface PostRepository
     List<Post> findAllByStatusAndCategory(PostStatus status, Category category);
     List<Post> findAllByStatusAndTagsContaining(PostStatus status, Tag tag);
     List<Post> findAllByStatus(PostStatus status);
+    List<Post> findAllByAuthorAndStatus(User author, PostStatus status);
 }

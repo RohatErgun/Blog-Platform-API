@@ -4,6 +4,7 @@ import com.rohater.blog.domain.PostStatus;
 import com.rohater.blog.domain.model.Category;
 import com.rohater.blog.domain.model.Post;
 import com.rohater.blog.domain.model.Tag;
+import com.rohater.blog.domain.model.User;
 import com.rohater.blog.repository.PostRepository;
 import com.rohater.blog.services.CategoryService;
 import com.rohater.blog.services.PostService;
@@ -51,5 +52,10 @@ public class PostServiceImpl implements PostService {
         }
 
         return postRepository.findAllByStatus(PostStatus.PUBLISHED);
+    }
+
+    @Override
+    public List<Post> getDraftPosts(User user) {
+        return postRepository.findAllByAuthorAndStatus(user, PostStatus.DRAFT);
     }
 }
