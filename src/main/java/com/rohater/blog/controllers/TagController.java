@@ -1,7 +1,7 @@
 package com.rohater.blog.controllers;
 
 import com.rohater.blog.domain.dtos.CreateTagRequest;
-import com.rohater.blog.domain.dtos.TagResponse;
+import com.rohater.blog.domain.dtos.TagDTO;
 import com.rohater.blog.domain.model.Tag;
 import com.rohater.blog.mappers.TagMapper;
 import com.rohater.blog.services.TagService;
@@ -22,19 +22,19 @@ public class TagController {
     private final TagMapper tagMapper;
 
     @GetMapping
-    public ResponseEntity<List<TagResponse>> getAllTags(){
+    public ResponseEntity<List<TagDTO>> getAllTags(){
         List<Tag> tags = tagService.getTags();
-        List<TagResponse> tagResponses = tags.stream().map(tagMapper::toTagResponse).toList();
+        List<TagDTO> tagResponse = tags.stream().map(tagMapper::toTagResponse).toList();
 
-        return ResponseEntity.ok(tagResponses);
+        return ResponseEntity.ok(tagResponse);
     }
 
     @PostMapping
-    public ResponseEntity<List<TagResponse>> createTags(@RequestBody CreateTagRequest createTagRequest){
+    public ResponseEntity<List<TagDTO>> createTags(@RequestBody CreateTagRequest createTagRequest){
         List<Tag> savedTags = tagService.createTags(createTagRequest.getNames());
-        List<TagResponse> createTagResponses = savedTags.stream().map(tagMapper::toTagResponse).toList();
+        List<TagDTO> createTagResponse = savedTags.stream().map(tagMapper::toTagResponse).toList();
 
-        return new ResponseEntity<>(createTagResponses, HttpStatus.CREATED);
+        return new ResponseEntity<>(createTagResponse, HttpStatus.CREATED);
     }
 
     @DeleteMapping(path = "/{id}")
