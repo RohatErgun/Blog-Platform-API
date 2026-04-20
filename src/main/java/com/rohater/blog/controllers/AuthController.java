@@ -21,6 +21,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest loginRequest){
+        System.out.println("Login hit");
         UserDetails userDetails = authenticationService.authenticate(
                 loginRequest.getEmail(),
                 loginRequest.getPassword()

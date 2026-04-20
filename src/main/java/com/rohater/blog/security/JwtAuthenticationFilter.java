@@ -25,6 +25,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             (HttpServletRequest request,
              HttpServletResponse response,
              FilterChain filterChain) throws ServletException, IOException {
+        log.info("Filter hit: {}", request.getRequestURI());
         try {
             String token = extractToken(request);
             if (token != null) {
@@ -43,8 +44,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }catch (Exception e){
             // Don't throw exceptions rather don't authenticate user
             log.warn("Received invalid auth token");
-            filterChain.doFilter(request, response);
         }
+        filterChain.doFilter(request, response);
     }
 
     private String extractToken(HttpServletRequest request){
