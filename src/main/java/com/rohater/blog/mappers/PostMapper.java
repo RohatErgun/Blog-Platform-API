@@ -1,5 +1,7 @@
 package com.rohater.blog.mappers;
 
+import com.rohater.blog.domain.CreatePostRequest;
+import com.rohater.blog.domain.dtos.CreatePostRequestDTO;
 import com.rohater.blog.domain.dtos.PostDTO;
 import com.rohater.blog.domain.model.Post;
 import org.mapstruct.Mapper;
@@ -13,4 +15,6 @@ public interface PostMapper {
     @Mapping(target = "category", source = "category")
     @Mapping(target = "tags", source = "tags")
     PostDTO toDTO(Post post);
+
+    CreatePostRequest toCreatePostRequest(CreatePostRequestDTO dto);
 }
