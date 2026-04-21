@@ -1,13 +1,16 @@
 package com.rohater.blog.controllers;
 
 import com.rohater.blog.domain.CreatePostRequest;
+import com.rohater.blog.domain.UpdatePostRequest;
 import com.rohater.blog.domain.dtos.CreatePostRequestDTO;
 import com.rohater.blog.domain.dtos.PostDTO;
+import com.rohater.blog.domain.dtos.UpdatePostRequestDTO;
 import com.rohater.blog.domain.model.Post;
 import com.rohater.blog.domain.model.User;
 import com.rohater.blog.mappers.PostMapper;
 import com.rohater.blog.services.PostService;
 import com.rohater.blog.services.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -53,6 +56,17 @@ public class PostController {
         PostDTO createPostDTO = postMapper.toDTO(createdPost);
 
         return new ResponseEntity<>(createPostDTO, HttpStatus.CREATED);
+    }
+
+    @PutMapping(path = "/{id}")
+    public ResponseEntity<PostDTO> updatePost(
+            @PathVariable UUID id,
+            @Valid  @RequestBody UpdatePostRequestDTO updatePostRequestDTO){
+        UpdatePostRequest updatePostRequest = postMapper.toUpdatePostRequest(updatePostRequestDTO);
+        Post updatedPost = postService.updatePost(id, updatePostRequest);
+        PostDTO updatedPostDTO = postMapper.toDTO(updatedPost);
+
+        return ResponseEntity.ok(updatedPostDTO);
     }
 
 //    @DeleteMapping(path = "/{id}")
