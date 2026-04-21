@@ -21,5 +21,5 @@ public class PostDTO {
     private Integer readingTime;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    private PostStatus postStatus;
+    private PostStatus status;
 }
