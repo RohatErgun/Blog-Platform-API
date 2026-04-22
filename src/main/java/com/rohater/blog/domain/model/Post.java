@@ -48,6 +48,7 @@ public class Post {
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
+    @Builder.Default
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "post_tags",

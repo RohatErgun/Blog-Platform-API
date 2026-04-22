@@ -23,6 +23,7 @@ public class Category {
     @Column(nullable = false, unique = true)
     private String name;
 
+    @Builder.Default
     @OneToMany(mappedBy = "category")
     private List<Post> posts = new ArrayList<>();
 
