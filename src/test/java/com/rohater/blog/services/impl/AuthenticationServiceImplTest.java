@@ -13,8 +13,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class AuthenticationServiceImplTest {
@@ -80,6 +80,28 @@ public class AuthenticationServiceImplTest {
                 BadCredentialsException.class,
                 () -> authenticationService.authenticate(email, rawPassword)
         );
+    }
+
+    @Test
+    void register_shouldSaveUser_whenEmailNotExists() {
+
+        String name = "John";
+        String email = "john@mail.com";
+        String password = "password123";
+        String encodedPassword = "encodedPassword";
+
+        when(userRepository.existsUserByEmail(email))
+                .thenReturn(false);
+
+        when(passwordEncoder.encode(password))
+                .thenReturn(encodedPassword);
+
+        UserDetails result =
+                authenticationService.register(name, email, password);
+
+        verify(userRepository, times(1)).save(any(User.class));
+
+        assertEquals(email, result.getUsername());
     }
 
 }
