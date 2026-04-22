@@ -104,4 +104,23 @@ public class AuthenticationServiceImplTest {
         assertEquals(email, result.getUsername());
     }
 
+    @Test
+    void register_shouldThrowException_whenEmailExists() {
+
+        String email = "existing@mail.com";
+
+        when(userRepository.existsUserByEmail(email))
+                .thenReturn(true);
+
+        assertThrows(
+                BadCredentialsException.class,
+                () -> authenticationService.register(
+                        "John",
+                        email,
+                        "password"
+                )
+        );
+
+        verify(userRepository, never()).save(any());
+    }
 }
