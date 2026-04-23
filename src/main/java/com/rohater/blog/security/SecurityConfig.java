@@ -17,17 +17,39 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 public class SecurityConfig {
 
+    /**
+     * Registers the custom JWT authentication filter used to intercept incoming HTTP requests
+     * and extract the Bearer token from the Authorization header.
+     *
+     * The filter validates the token and sets the authenticated user inside the
+     * Spring Security context before request processing continues.
+     *
+     * This enables stateless authentication across secured endpoints.
+     */
     @Bean
-    public JwtAuthenticationFilter jwtAuthenticationFilter
-            (AuthenticationService authenticationService){
+    public JwtAuthenticationFilter jwtAuthenticationFilter(AuthenticationService authenticationService){
         return new JwtAuthenticationFilter(authenticationService);
     }
 
+    /**
+     * Provides a custom implementation of UserDetailsService used by Spring Security
+     * to load user-specific data during authentication.
+     *
+     * This service retrieves users from the database via UserRepository and adapts
+     * them into BlogUserDetails objects understood by Spring Security.
+     */
     @Bean
     public UserDetailsService userDetailsService(UserRepository userRepository){
         return new BlogUserDetailsService(userRepository);
     }
 
+    /**
+     * Configures the DAO-based authentication provider responsible for validating
+     * username/password credentials during authentication.
+     *
+     * It uses the custom UserDetailsService to retrieve users and PasswordEncoder
+     * to verify password hashes securely.
+     */
     @Bean
     public DaoAuthenticationProvider authenticationProvider(
             UserDetailsService userDetailsService,
@@ -37,6 +59,16 @@ public class SecurityConfig {
         return provider;
     }
 
+    /**
+     * Configures the HTTP security rules for the application.
+     *
+     * Defines:
+     * - which endpoints are publicly accessible
+     * - which endpoints require authentication
+     * - stateless session management (JWT-based authentication)
+     * - CSRF disabling for REST API usage
+     * - registration of the JWT authentication filter in the security filter chain
+     */
     @Bean
     public SecurityFilterChain securityFilterChain
             (HttpSecurity httpSecurity, JwtAuthenticationFilter jwtAuthenticationFilter)
