@@ -61,9 +61,4 @@ public class SecurityConfig {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
-////    @Bean
-//    public AuthenticationManager authenticationManager(AuthenticationConfiguration config)
-//            throws Exception{
-//        return config.getAuthenticationManager();
-//    }
 }
